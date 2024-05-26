@@ -1,5 +1,5 @@
 <script setup>
-import GuestLayout from "@/Layouts/GuestLayout.vue";
+import Defaut from "@/Layouts/Defaut.vue";
 import InputError from "@/Components/InputError.vue";
 import InputLabel from "@/Components/InputLabel.vue";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
@@ -22,7 +22,7 @@ const submit = () => {
 
 <template>
   <v-app>
-    <GuestLayout class="pb-10">
+    <Defaut class="pb-10">
 
       <Head title="Registrar" />
 
@@ -69,6 +69,6 @@ const submit = () => {
           </PrimaryButton>
         </div>
       </form>
-    </GuestLayout>
+    </Defaut>
   </v-app>
 </template>

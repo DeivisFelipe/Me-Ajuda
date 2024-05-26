@@ -36,10 +36,17 @@ defineProps({
     </div> -->
       <v-app-bar class="pt-2 pb-2 ps-5 pe-5" :elevation="2" height="80" color="#161D29" dark>
         <img src="/logo_MeAjuda_horizontal.png" alt="Logo" class="w-60 h-28 mr-10" />
-        <v-text-field :loading="loading" append-inner-icon="mdi-magnify" density="compact" label="Pesquisar" variant="solo" hide-details single-line @click:append-inner="onClick"></v-text-field>
-        <v-spacer></v-spacer>
-        <Link v-if="$page.props.auth.user" :href="route('anuncios')" class="font-semibold text-white hover:text-gray-900 dark:text-white dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Meus Anúncios</Link>
+        <v-text-field class="me-10" :loading="loading" append-inner-icon="mdi-magnify" density="compact" label="Pesquisar" variant="solo" hide-details single-line @click:append-inner="onClick"></v-text-field>
 
+        <template v-if="$page.props.auth.user">
+          <Link :href="route('anuncios')" class="font-semibold text-white hover:text-gray-900 dark:text-white dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Meus Anúncios</Link>
+          <Link :href="route('criaAnuncio')" class="ms-4 font-semibold text-white hover:text-gray-900 dark:text-white dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">
+          Criar Anúncio
+          </Link>
+          <Link :href="route('logout')" method="post" class="ms-4 font-semibold text-white hover:text-gray-900 dark:text-white dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">
+          Sair
+          </Link>
+        </template>
         <template v-else>
           <Link :href="route('login')" class="font-semibold text-white hover:text-gray-900 dark:text-white dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Entrar</Link>
 
