@@ -1,9 +1,10 @@
 <?php
 
-use App\Http\Controllers\ProfileController;
-use Illuminate\Foundation\Application;
-use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+use Illuminate\Support\Facades\Route;
+use Illuminate\Foundation\Application;
+use App\Http\Controllers\AnuncioController;
+use App\Http\Controllers\ProfileController;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,19 +18,27 @@ use Inertia\Inertia;
 */
 
 Route::get('/', function () {
+    // Pega todos os anuncio do banco de dados
+    $anuncios = \App\Models\Anuncio::all();
+
     return Inertia::render('Home', [
         'canLogin' => Route::has('login'),
-        'canRegister' => Route::has('register')
+        'canRegister' => Route::has('register'),
+        'anuncios' => $anuncios,
     ]);
-});
+})->name('home');
 
 Route::get('/criar-anuncio', function () {
-    return Inertia::render('CriaAnuncio');
+    return Inertia::render('Anuncio/CriaAnuncio');
 })->middleware(['auth', 'verified'])->name('criaAnuncio');
 
-Route::get('/anuncios', function () {
-    return Inertia::render('Anuncios');
-})->middleware(['auth', 'verified'])->name('anuncios');
+Route::post('/criar-anuncio', [AnuncioController::class, 'store'])->middleware(['auth', 'verified'])->name('anuncios.store');
+Route::get('/anuncios/delete/{anuncio}', [AnuncioController::class, 'destroy'])->middleware(['auth', 'verified'])->name('anuncios.destroy');
+Route::get('/anuncios/{anuncio}', [AnuncioController::class, 'show'])->middleware(['auth', 'verified'])->name('anuncios.show');
+
+Route::get('/perquisar-anuncios', [AnuncioController::class, 'search'])->name('anuncios.search');
+
+Route::get('/anuncios', [AnuncioController::class, "anuncios"])->middleware(['auth', 'verified'])->name('anuncios');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
